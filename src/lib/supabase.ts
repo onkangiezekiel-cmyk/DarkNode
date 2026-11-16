@@ -8,6 +8,10 @@ if (Boolean(supabaseUrl) !== Boolean(supabaseAnonKey)) {
 }
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey)
+if (import.meta.env.PROD && !isSupabaseConfigured) {
+  throw new Error('Supabase is required for production builds. Configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.')
+}
+
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl!, supabaseAnonKey!, {
     auth: {

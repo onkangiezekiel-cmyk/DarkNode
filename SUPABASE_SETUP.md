@@ -7,16 +7,17 @@ The app uses Supabase Auth and Postgres for account profiles, wallet balances, i
 1. Create a Supabase project and enable email/password sign-in under **Authentication → Providers**.
 2. Copy the project URL and publishable key (or legacy anon key) from **Project Settings → API**.
 3. Copy `.env.example` to `.env.local` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` using the project URL and public anon/publishable key from **Project Settings → API**. For the deployed deposit function in this setup, `VITE_SUPABASE_URL` must be `https://xoheekwyjromtsizxwpl.supabase.co`. Never use a `service_role` or secret key in this frontend.
-4. Run the SQL migrations present in `supabase/migrations/` in timestamp order, including `202611160002_paystack_mpesa_wallet_credit.sql`.
-5. In **Authentication → URL Configuration**, set the local and deployed site URLs and add the app's sign-in redirect URLs.
-6. Configure email confirmation and SMTP before production use.
-7. Set `PAYSTACK_SECRET_KEY` as a Supabase Edge Function secret. Use a test key while testing; use a live key only for your live Paystack business account:
+4. In Vercel, open the project connected to this repository and add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` under **Settings → Environment Variables** for every environment you deploy (Production, and Preview if needed). Use the same values as `.env.local`, then redeploy so Vite includes them in the client build. Do not commit `.env.local` or put a service-role/secret key in any `VITE_*` variable.
+5. Run the SQL migrations present in `supabase/migrations/` in timestamp order, including `202611160002_paystack_mpesa_wallet_credit.sql`.
+6. In **Authentication → URL Configuration**, set the local and deployed site URLs and add the app's sign-in redirect URLs.
+7. Configure email confirmation and SMTP before production use.
+8. Set `PAYSTACK_SECRET_KEY` as a Supabase Edge Function secret. Use a test key while testing; use a live key only for your live Paystack business account:
 
 	```sh
 	supabase secrets set PAYSTACK_SECRET_KEY=sk_test_your_key
 	```
 
-8. Deploy the in-page M-Pesa function after applying the wallet-credit migration:
+9. Deploy the in-page M-Pesa function after applying the wallet-credit migration:
 
 	```sh
 	supabase functions deploy paystack-mpesa-deposit
