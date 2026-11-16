@@ -1,0 +1,13 @@
+project_id = "darknode"
+
+[auth]
+enabled = true
+site_url = "https://dark-node-dark-node.vercel.app/"
+additional_redirect_urls = [
+  "https://dark-node-dark-node.vercel.app/",
+  "https://dark-node-dark-node.vercel.app/**",
+  "https://dark-*-node-dark-node.vercel.app",
+  "https://dark-*-node-dark-node.vercel.app/**",
+  "http://localhost:5173/**",
+]
+
